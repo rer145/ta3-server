@@ -1,16 +1,6 @@
 <?php
 
-	class BaseEntity extends SimpleORM
-	{
-		protected function filterIn_uuid($data) {
-			if (empty($data["id"])) {
-				$data["id"] = "UUID()";
-			}
-			return $data;
-		}
-	}
-
-	class AnalysisLog extends BaseEntity
+	class AnalysisLog extends SimpleORM
 	{
 		protected function filterOut()
 		{
@@ -19,8 +9,8 @@
 		}
 	}
 
-	class AnalysisSelections extends BaseEntity {}
+	class AnalysisSelections extends SimpleORM {}
 
-	class AnalysisResults extends BaseEntity {}
+	class AnalysisResults extends SimpleORM {}
 
 ?>
