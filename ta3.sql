@@ -31,11 +31,13 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `analysislog`;
 CREATE TABLE IF NOT EXISTS `analysislog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(50) NOT NULL,
   `app_version` varchar(10) NOT NULL,
   `r_version` varchar(10) NOT NULL,
   `r_code_version` varchar(10) NOT NULL,
   `db_version` varchar(10) NOT NULL,
   `platform` varchar(50) DEFAULT NULL,
+  `platform_release` varchar(50) DEFAULT NULL,
   `arch` varchar(50) DEFAULT NULL,
   `time_to_analyze` decimal(10,4) NOT NULL,
   `analysis_date` datetime NOT NULL,

@@ -27,11 +27,13 @@ ini_set('display_errors', '1');
 
 		if (is_array($body) && count($body) == 3) {
 			$analysis = new AnalysisLog;
+			$analysis->uuid = $body['analysis']['uuid'];
 			$analysis->app_version = $body['analysis']['app_version'];
 			$analysis->r_version = $body['analysis']['r_version'];
 			$analysis->r_code_version = $body['analysis']['r_code_version'];
 			$analysis->db_version = $body['analysis']['db_version'];
 			$analysis->platform = $body['analysis']['platform'];
+			$analysis->platform_release = $body['analysis']['platform_release'];
 			$analysis->arch = $body['analysis']['arch'];
 			$analysis->time_to_analyze = round($body['analysis']['time_to_analyze'], 4);
 			$analysis->analysis_date = $body['analysis']['analysis_date'];
