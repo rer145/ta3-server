@@ -5,18 +5,22 @@ ini_set('display_errors', '1');
 
 	//valid routes check
 
-	include_once "db.php";
+	require "lib/SimpleORM.class.php";
+	include_once "env.php";
+	include_once "db/db.php";
+	include_once "db/models.php";
 
 	$method = empty($_GET['method']) ? "" : strtolower($_GET['method']);
 
 	/**
 	 * Logs an analysis entity
 	 * 
+	 * @method POST
 	 * @access public
 	 * @param mixed $body
 	 * @return integer
 	 */
-	if ($method == "log") {
+	if ($method == "log_analysis") {
 		$body = file_get_contents('php://input');
 
 		if (empty($body)) {
@@ -69,18 +73,127 @@ ini_set('display_errors', '1');
 	/**
 	 * Get an analysis entity
 	 * 
+	 * @method GET
 	 * @access public
 	 * @param integer $id
 	 * @return AnalysisLog
 	 */
-	if ($method == "get") {
+	if ($method == "get_analysis") {
 		if (empty($_GET['id'])) {
 			die(sprintf('$id was not supplied'));
 		}
 
 		$obj = AnalysisLog::retrieveByid($_GET['id']);
 		echo json_encode($obj);
-		
+	}
+
+	/**
+	 * Get a list of analysis entities for a uuid
+	 * 
+	 * @method GET
+	 * @access public
+	 * @param integer $uuid
+	 * @return Array(AnalysisLog)
+	 */
+	if ($method == "get_analysis_by_uuid") {
+		if (empty($_GET['uuid'])) {
+			die(sprintf('$uuid was not supplied'));
+		}
+
+		$obj = AnalysisLog::retrieveByuuid($_GET['uuid']);
+		echo json_encode($obj);
+	}
+
+	/**
+	 * Get a debug entity
+	 * 
+	 * @method GET
+	 * @access public
+	 * @param integer $id
+	 * @return DebugLog
+	 */
+	if ($method == "get_debug") {
+		if (empty($_GET['id'])) {
+			die(sprintf('$id was not supplied'));
+		}
+
+		$obj = DebugLog::retrieveByid($_GET['id']);
+		echo json_encode($obj);
+	}
+
+	/**
+	 * Get a list of debug entities for a uuid
+	 * 
+	 * @method GET
+	 * @access public
+	 * @param integer $uuid
+	 * @return Array(DebugLog)
+	 */
+	if ($method == "get_debug_by_uuid") {
+		if (empty($_GET['uuid'])) {
+			die(sprintf('$uuid was not supplied'));
+		}
+
+		$obj = DebugLog::retrieveByuuid($_GET['uuid']);
+		echo json_encode($obj);
+	}
+
+	/**
+	 * Logs a debug entity
+	 * 
+	 * @method POST
+	 * @access public
+	 * @param mixed $body
+	 * @return integer
+	 */
+	if ($method == "log_debug") {
+		$body = file_get_contents('php://input');
+
+		if (empty($body)) {
+			die(sprintf('$body was not supplied'));
+		}
+
+		$body = json_decode($body, true);
+
+		// if (is_array($body) && count($body) == 3) {
+		// 	$analysis = new AnalysisLog;
+		// 	$analysis->uuid = $body['analysis']['uuid'];
+		// 	$analysis->app_version = $body['analysis']['app_version'];
+		// 	$analysis->r_version = $body['analysis']['r_version'];
+		// 	$analysis->r_code_version = $body['analysis']['r_code_version'];
+		// 	$analysis->db_version = $body['analysis']['db_version'];
+		// 	$analysis->platform = $body['analysis']['platform'];
+		// 	$analysis->platform_release = $body['analysis']['platform_release'];
+		// 	$analysis->arch = $body['analysis']['arch'];
+		// 	$analysis->time_to_analyze = round($body['analysis']['time_to_analyze'], 4);
+		// 	$analysis->analysis_date = $body['analysis']['analysis_date'];
+		// 	//$analysis->analysis_date = date("Y-m-d H:i:s");
+		// 	$analysis->save();
+
+		// 	$new_id = $analysis->id;
+
+		// 	if (count($body['selections']) > 0) {
+		// 		foreach ($body['selections'] as $item) {
+		// 			$selection = new AnalysisSelections;
+		// 			$selection->analysis_id = $new_id;
+		// 			$selection->trait = $item['trait'];
+		// 			$selection->score = $item['score'];
+		// 			$selection->save();
+		// 		}
+		// 	}
+
+		// 	$result = new AnalysisResults;
+		// 	$result->analysis_id = $new_id;
+		// 	$result->sample_size = $body['results']['sample_size'];
+		// 	$result->estimated_age = round($body['results']['estimated_age'], 4);
+		// 	$result->lower_95_bound = round($body['results']['lower_95_bound'], 4);
+		// 	$result->upper_95_bound = round($body['results']['upper_95_bound'], 4);
+		// 	$result->std_error = round($body['results']['std_error'], 4);
+		// 	$result->corr = round($body['results']['corr'], 4);
+		// 	$result->save();
+
+		// 	echo $new_id;
+		// }
 	}
 
 ?>

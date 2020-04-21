@@ -13,4 +13,6 @@
 
 	class AnalysisResults extends SimpleORM {}
 
+	class DebugLog extends SimpleORM {}
+
 ?>
