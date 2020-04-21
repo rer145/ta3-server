@@ -171,45 +171,24 @@ ini_set('display_errors', '1');
 
 		$body = json_decode($body, true);
 
-		// if (is_array($body) && count($body) == 3) {
-		// 	$analysis = new AnalysisLog;
-		// 	$analysis->uuid = $body['analysis']['uuid'];
-		// 	$analysis->app_version = $body['analysis']['app_version'];
-		// 	$analysis->r_version = $body['analysis']['r_version'];
-		// 	$analysis->r_code_version = $body['analysis']['r_code_version'];
-		// 	$analysis->db_version = $body['analysis']['db_version'];
-		// 	$analysis->platform = $body['analysis']['platform'];
-		// 	$analysis->platform_release = $body['analysis']['platform_release'];
-		// 	$analysis->arch = $body['analysis']['arch'];
-		// 	$analysis->time_to_analyze = round($body['analysis']['time_to_analyze'], 4);
-		// 	$analysis->analysis_date = $body['analysis']['analysis_date'];
-		// 	//$analysis->analysis_date = date("Y-m-d H:i:s");
-		// 	$analysis->save();
+		if (is_array($body) && count($body) == 2) {
+			$debug = $body["debug"];
+			$data = $body["data"];
 
-		// 	$new_id = $analysis->id;
+			$log = new DebugLog;
+			$log = append_debug_info($log, $debug);
+			$log->event_date = $data['event_date'];
+			$log->event_level = $data['event_level'];
+			$log->event_category = $data['event_category'];
+			$log->event_action = $data['event_action'];
+			$log->event_label = $data['event_label'];
+			$log->event_value = $data['event_value'];
+			$log->save();
 
-		// 	if (count($body['selections']) > 0) {
-		// 		foreach ($body['selections'] as $item) {
-		// 			$selection = new AnalysisSelections;
-		// 			$selection->analysis_id = $new_id;
-		// 			$selection->trait = $item['trait'];
-		// 			$selection->score = $item['score'];
-		// 			$selection->save();
-		// 		}
-		// 	}
+			$new_id = $log->id;
+			echo $new_id;
+		}
 
-		// 	$result = new AnalysisResults;
-		// 	$result->analysis_id = $new_id;
-		// 	$result->sample_size = $body['results']['sample_size'];
-		// 	$result->estimated_age = round($body['results']['estimated_age'], 4);
-		// 	$result->lower_95_bound = round($body['results']['lower_95_bound'], 4);
-		// 	$result->upper_95_bound = round($body['results']['upper_95_bound'], 4);
-		// 	$result->std_error = round($body['results']['std_error'], 4);
-		// 	$result->corr = round($body['results']['corr'], 4);
-		// 	$result->save();
-
-		// 	echo $new_id;
-		// }
 	}
 
 ?>
