@@ -5,6 +5,7 @@ ini_set('display_errors', '1');
 
 	function append_debug_info($obj, $debug) {
 		$obj->uuid = $debug['uuid'];
+		$obj->session = $debug['session'];
 		$obj->app_version = $debug['app_version'];
 		$obj->r_version = $debug['r_version'];
 		$obj->r_code_version = $debug['r_code_version'];

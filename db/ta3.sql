@@ -32,6 +32,7 @@ DROP TABLE IF EXISTS `analysislog`;
 CREATE TABLE IF NOT EXISTS `analysislog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uuid` varchar(50) NOT NULL,
+  `session` varchar(50) NULL,
   `app_version` varchar(10) NOT NULL,
   `r_version` varchar(10) NOT NULL,
   `r_code_version` varchar(10) NOT NULL,
@@ -93,8 +94,9 @@ CREATE TABLE IF NOT EXISTS `analysisselections` (
 
 DROP TABLE IF EXISTS `debuglog`;
 CREATE TABLE IF NOT EXISTS `debuglog` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `uuid` varchar(50) NOT NULL,
+  `session` varchar(50) NULL,
   `app_version` varchar(10) NOT NULL,
   `r_version` varchar(10) NOT NULL,
   `r_code_version` varchar(10) NOT NULL,
