@@ -3,6 +3,26 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
+	function append_debug_info($obj, $debug) {
+		$obj->uuid = $debug['uuid'];
+		$obj->app_version = $debug['app_version'];
+		$obj->r_version = $debug['r_version'];
+		$obj->r_code_version = $debug['r_code_version'];
+		$obj->db_version = $debug['db_version'];
+		$obj->platform = $debug['platform'];
+		$obj->platform_release = $debug['platform_release'];
+		$obj->arch = $debug['arch'];
+		$obj->node_version = $debug['node_version'];
+		$obj->electron_version = $debug['electron_version'];
+		$obj->chrome_version = $debug['chrome_version'];
+		$obj->locale = $debug['locale'];
+		$obj->locale_country_code = $debug['locale_country_code'];
+		$obj->arguments = $debug['arguments'];
+		$obj->entry_mode = $debug['entry_mode'];
+
+		return $obj;
+	}
+
 	//valid routes check
 
 	require "lib/SimpleORM.class.php";
@@ -29,25 +49,21 @@ ini_set('display_errors', '1');
 
 		$body = json_decode($body, true);
 
-		if (is_array($body) && count($body) == 3) {
+		if (is_array($body) && count($body) == 2) {
+			$debug = $body["debug"];
+			$data = $body["data"];
+
 			$analysis = new AnalysisLog;
-			$analysis->uuid = $body['analysis']['uuid'];
-			$analysis->app_version = $body['analysis']['app_version'];
-			$analysis->r_version = $body['analysis']['r_version'];
-			$analysis->r_code_version = $body['analysis']['r_code_version'];
-			$analysis->db_version = $body['analysis']['db_version'];
-			$analysis->platform = $body['analysis']['platform'];
-			$analysis->platform_release = $body['analysis']['platform_release'];
-			$analysis->arch = $body['analysis']['arch'];
-			$analysis->time_to_analyze = round($body['analysis']['time_to_analyze'], 4);
-			$analysis->analysis_date = $body['analysis']['analysis_date'];
+			$analysis = append_debug_info($analysis, $debug);
+			$analysis->time_to_analyze = round($data['analysis']['time_to_analyze'], 4);
+			$analysis->analysis_date = $data['analysis']['analysis_date'];
 			//$analysis->analysis_date = date("Y-m-d H:i:s");
 			$analysis->save();
 
 			$new_id = $analysis->id;
 
-			if (count($body['selections']) > 0) {
-				foreach ($body['selections'] as $item) {
+			if (count($data['selections']) > 0) {
+				foreach ($data['selections'] as $item) {
 					$selection = new AnalysisSelections;
 					$selection->analysis_id = $new_id;
 					$selection->trait = $item['trait'];
@@ -58,12 +74,12 @@ ini_set('display_errors', '1');
 
 			$result = new AnalysisResults;
 			$result->analysis_id = $new_id;
-			$result->sample_size = $body['results']['sample_size'];
-			$result->estimated_age = round($body['results']['estimated_age'], 4);
-			$result->lower_95_bound = round($body['results']['lower_95_bound'], 4);
-			$result->upper_95_bound = round($body['results']['upper_95_bound'], 4);
-			$result->std_error = round($body['results']['std_error'], 4);
-			$result->corr = round($body['results']['corr'], 4);
+			$result->sample_size = $data['results']['sample_size'];
+			$result->estimated_age = round($data['results']['estimated_age'], 4);
+			$result->lower_95_bound = round($data['results']['lower_95_bound'], 4);
+			$result->upper_95_bound = round($data['results']['upper_95_bound'], 4);
+			$result->std_error = round($data['results']['std_error'], 4);
+			$result->corr = round($data['results']['corr'], 4);
 			$result->save();
 
 			echo $new_id;
