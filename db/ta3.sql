@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Apr 20, 2020 at 04:41 PM
+-- Generation Time: Apr 21, 2020 at 02:19 AM
 -- Server version: 5.6.34-log
 -- PHP Version: 7.2.1
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `analysislog` (
   `time_to_analyze` decimal(10,4) NOT NULL,
   `analysis_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `analysisresults` (
   `std_error` decimal(10,4) NOT NULL,
   `corr` decimal(10,4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -76,7 +76,38 @@ CREATE TABLE IF NOT EXISTS `analysisselections` (
   `trait` varchar(50) NOT NULL,
   `score` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `debuglog`
+--
+
+DROP TABLE IF EXISTS `debuglog`;
+CREATE TABLE IF NOT EXISTS `debuglog` (
+  `id` int(11) NOT NULL,
+  `uuid` varchar(50) NOT NULL,
+  `app_version` varchar(10) NOT NULL,
+  `r_version` varchar(10) NOT NULL,
+  `r_code_version` varchar(10) NOT NULL,
+  `db_version` varchar(10) NOT NULL,
+  `platform` varchar(50) DEFAULT NULL,
+  `platform_release` varchar(50) DEFAULT NULL,
+  `arch` varchar(50) DEFAULT NULL,
+  `node_version` varchar(25) DEFAULT NULL,
+  `electron_version` varchar(25) DEFAULT NULL,
+  `chrome_version` varchar(25) DEFAULT NULL,
+  `locale` varchar(50) DEFAULT NULL,
+  `locale_country_code` varchar(50) DEFAULT NULL,
+  `entry_mode` varchar(10) DEFAULT NULL,
+  `event_date` datetime NOT NULL,
+  `event_category` varchar(50) DEFAULT NULL,
+  `event_action` varchar(500) DEFAULT NULL,
+  `event_label` varchar(50) DEFAULT NULL,
+  `event_value` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
