@@ -1,0 +1,4 @@
+# Remove www
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^www\.
+RewriteRule ^(.*)$ https://ta3info.com/$1 [R=301,L]
