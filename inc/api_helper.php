@@ -6,6 +6,8 @@
 		$obj->r_version = $debug['r_version'];
 		$obj->r_code_version = $debug['r_code_version'];
 		$obj->db_version = $debug['db_version'];
+		$obj->ta3bum_version = $debug['ta3bum_version'];
+		$obj->ta3oum_version = $debug['ta3oum_version'];
 		$obj->platform = $debug['platform'];
 		$obj->platform_release = $debug['platform_release'];
 		$obj->arch = $debug['arch'];
