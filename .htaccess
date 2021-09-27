@@ -5,3 +5,8 @@ RewriteRule ^(.*)$ https://ta3info.com/$1 [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule !.*\.php$ %{REQUEST_FILENAME}.php [QSA,L]
+
+
+<IfModule mod_headers.c>
+Header set Cache-Control "private"
+</IfModule>

@@ -22,7 +22,7 @@ ini_set('display_errors', '1');
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Transitional Analysis 3 Age Estimation</title>
+	<title>Transitional Analysis 3 Age Estimation Log</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
