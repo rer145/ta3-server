@@ -7,6 +7,16 @@ ini_set('display_errors', '1');
 	include_once "../db/db.php";
 	include_once "../db/models.php";
 	//include_once "../inc/api_helper.php";
+
+	$temp = AnalysisLog::sql("SELECT COUNT(*) as cnt FROM analysislog", SimpleOrm::FETCH_ONE);
+	$records = $temp->cnt;
+
+	$size = !empty($_GET["size"]) ? $_GET["size"] : 50;
+	$start = !empty($_GET["start"]) ? $_GET["start"] : 1;
+	$end = !empty($_GET["end"]) ? $_GET["end"] : $size;
+
+	$page = $end / $size;
+	$pages = ($records / $size) + 1;
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +50,8 @@ ini_set('display_errors', '1');
 					</thead>
 					<tbody>
 						<?php
-							$items = AnalysisLog::all();
+							//$items = AnalysisLog::all();
+							$items = AnalysisLog::sql("SELECT * FROM :table WHERE id >= " . $start . " AND id <= " . $end);
 							if (count($items) > 0)
 							{
 								foreach ($items as $item)
@@ -65,6 +76,24 @@ ini_set('display_errors', '1');
 					</tbody>
 					</table>
 				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<nav>
+					<ul class="pagination">
+						<li class="page-item <?php if ($page == 1) echo ' disabled' ?>"><a class="page-link" href="index.php?page=<?php echo $page-1 ?>&start=<?php echo $start-$size-1 ?>&end=<?php echo $start-1 ?>">Previous</a></li>
+						<?php
+							for ($i = 1; $i <= $pages; $i++) {
+								echo '<li class="page-item';
+								if ($page == $i) echo ' active';
+								echo '"><a class="page-link" href="index.php?page=' . $i . '&start=' . ((($i-1)*$size)+1) . '&end=' . ($i*$size) . '">' . $i . '</a></li>';
+							}
+						?>
+						
+						<li class="page-item <?php if ($page == $pages) echo ' disabled' ?>"><a class="page-link" href="index.php?page=<?php echo $page+1 ?>&start=<?php echo $end+1 ?>&end=<?php echo $end+$size ?>">Next</a></li>
+					</ul>
+				</nav>
 			</div>
 		</div>
 	</div>

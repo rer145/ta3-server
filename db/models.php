@@ -4,8 +4,8 @@
 	{
 		protected function filterOut()
 		{
-			$this->selections = AnalysisSelections::retrieveByAnalysis_id($this->id);
-			$this->results = AnalysisResults::retrieveByAnalysis_id($this->id);
+			$this->selections = AnalysisSelections::retrieveByanalysis_id($this->id);
+			$this->results = AnalysisResults::retrieveByanalysis_id($this->id);
 		}
 	}
 
